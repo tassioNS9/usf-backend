@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Unit {
+  id           Int          @id @default(autoincrement())
+  name         String       @unique
+  tel          String
+  address      String
+  neighborhood String
+  city         String
+  state        String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  users_unit   User[]
+  Evaluation   Evaluation[]
+
+  @@map("units")
+}
+
+model User {
+  id              Int           @id @default(autoincrement())
+  name            String
+  cpf             String        @unique
+  password        String
+  id_unit         Int
+  unit            Unit          @relation(fields: [id_unit], references: [id], onDelete: Cascade)
+  office          String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  role            Role          @default(USER)
+  refresh_token   RefreshToken?
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        Int  @id @default(autoincrement())
+  expiresIn Int
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int  @unique
+
+  @@map("refresh_token")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum TypeIndicators {
+  BOOL
+  NUMERIC
+}
+
+model Indicator {
+  id             Int            @id @default(autoincrement())
+  description    String         @unique
+  objective      Int
+  dimension      String
+  type_Indicator TypeIndicators
+  sources        String
+  evaluations    Evaluation[]
+
+  @@map("indicators")
+}
+
+model Evaluation {
+  id              Int       @id @default(autoincrement())
+  id_indicator    Int
+  indicator       Indicator @relation(fields: [id_indicator], references: [id], onDelete: Cascade)
+  id_unit         Int
+  unit            Unit      @relation(fields: [id_unit], references: [id], onDelete: Cascade)
+  evaluator       String
+  date_evaluation DateTime  @db.Date
+  valueNum        Int?
+  valueBol        Boolean?
+
+  @@map("evaluations")
+}

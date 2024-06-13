@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Unit {
+  id           String      @id @default(uuid())
+  name         String      @unique
+  tel          String
+  address      String
+  neighborhood String
+  city         String
+  State        String
+  users_unit   User[]
+  evaluation   Evaluation?
+
+  @@map("units")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  cpf        String      @unique
+  password   String
+  name       String
+  unit       Unit        @relation(fields: [id_unit], references: [id])
+  id_unit    String
+  office     String
+  type_user  TypeUsers   @default(DEFAULT)
+  evaluation Evaluation?
+
+  @@map("users")
+}
+
+enum TypeUsers {
+  ADMIN
+  DEFAULT
+}
+
+model Indicator {
+  id             String      @id @default(uuid())
+  description    String
+  objective      Int
+  dimension      String
+  type_Indicator String
+  sources        String
+  evaluation     Evaluation?
+
+  @@map("indicators")
+}
+
+model Evaluation {
+  id              String    @id @default(uuid())
+  indicator       Indicator @relation(fields: [id_indicator], references: [id])
+  id_indicator    String    @unique
+  unit            Unit      @relation(fields: [id_unit], references: [id])
+  id_unit         String    @unique
+  user            User      @relation(fields: [user_id], references: [id])
+  user_id         String    @unique
+  date_evaluation DateTime
+
+  @@map("evaluations")
+}
