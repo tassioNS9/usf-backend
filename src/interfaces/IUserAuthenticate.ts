@@ -1,4 +1,4 @@
 
 export interface IUserAuthenticate{
-    auth(cpf:string, password:string)
+    auth(cpf:string, password:string):Promise<any>
 }

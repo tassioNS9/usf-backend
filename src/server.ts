@@ -13,18 +13,17 @@ app.use(Express.json())
 app.use(cors())
 app.use(router)
 
-//router.get('/api/users', UserController.getUsers)
 
-app.get('/userslist', async (request, response) => {
-    const users= await prisma.user.findMany()
-    return response.json(users)
-  })
+// app.get('/userslist', async (request, response) => {
+//     const users= await prisma.user.findMany()
+//     return response.json(users)
+//   })
 
-app.use((error: Error, request: Request, response: Response, next:NextFunction)=>{
-    return response.json({
-        status: "Error",
-        message: error.message
-    });
-})
+// app.use((error: Error, request: Request, response: Response, next:NextFunction)=>{
+//     return response.json({
+//         status: "Error",
+//         message: error.message
+//     });
+// })
 
 app.listen(port, ()=> console.log(`server listen on PORT ${port}`) );

@@ -24,7 +24,7 @@ router.post('/api/auth', AuthControler.authUser)
 router.get('/api/auth/verify', AuthControler.authverifyUser)
 router.post('/api/refresh-token', refreshTokenController.handle)
 router.post('/api/users', UserController.createUser)
-
+router.get('/api/users', UserController.getUsers)
 router.get('/api/users/search', UserController.filteredUsers)
 router.get('/api/users/:id', UserController.getUserById)
 router.put('/api/users/:id', UserController.updateUser)
