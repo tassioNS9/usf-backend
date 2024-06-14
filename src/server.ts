@@ -7,11 +7,12 @@ import router from "./routes";
 const app = Express();
 
 
-const port = process.env.PORT ?? 3333
+const port = process.env.PORT || 3333
 
 app.use(Express.json())
 app.use(cors())
 app.use(router)
+
 
 
 app.use((error: Error, request: Request, response: Response, next:NextFunction)=>{

@@ -11,42 +11,42 @@ const router = Router();
 const refreshTokenController = new RefreshTokenController()
 
 //unit
-router.post('/api/units', AuthMiddlewares, UnitController.createUnit)
+router.post('/api/units', UnitController.createUnit)
 router.get('/api/units', UnitController.getUnits)
-router.get('/api/units/search', AuthMiddlewares, UnitController.filteredUnits)
-router.get('/api/units/:id', AuthMiddlewares, UnitController.getUnitById)
-router.put('/api/units/:id', AuthMiddlewares, UnitController.updateUnit)
-router.delete('/units/:id', AuthMiddlewares, UnitController.deleteUnit)
+router.get('/api/units/search', UnitController.filteredUnits)
+router.get('/api/units/:id', UnitController.getUnitById)
+router.put('/api/units/:id', UnitController.updateUnit)
+router.delete('/units/:id', UnitController.deleteUnit)
 
 
 //users
 router.post('/api/auth', AuthControler.authUser)
 router.get('/api/auth/verify', AuthControler.authverifyUser)
 router.post('/api/refresh-token', refreshTokenController.handle)
-router.post('/api/users', AuthMiddlewares, UserController.createUser)
+router.post('/api/users', UserController.createUser)
 router.get('/api/users', UserController.getUsers)
-router.get('/api/users/search', AuthMiddlewares, UserController.filteredUsers)
-router.get('/api/users/:id', AuthMiddlewares, UserController.getUserById)
-router.put('/api/users/:id', AuthMiddlewares, UserController.updateUser)
-router.delete('/users/:id', AuthMiddlewares, UserController.deleteUser)
+router.get('/api/users/search', UserController.filteredUsers)
+router.get('/api/users/:id', UserController.getUserById)
+router.put('/api/users/:id', UserController.updateUser)
+router.delete('/users/:id', UserController.deleteUser)
 
 //evaluations
-router.post('/api/evaluations', AuthMiddlewares, EvaluationController.createEvaluation )
-router.get('/api/evaluations/:year', AuthMiddlewares, EvaluationController.getEvaluationsByYear)
-router.get('/api/evaluations/unit/:id_unit/:id_indicator', AuthMiddlewares, EvaluationController.getEvaluationsByIndicator)
-router.get('/api/evaluations/unit/:id_unit/year/:year', AuthMiddlewares, EvaluationController.getEvaluationsByUnit)
+router.post('/api/evaluations', EvaluationController.createEvaluation )
+router.get('/api/evaluations/:year', EvaluationController.getEvaluationsByYear)
+router.get('/api/evaluations/unit/:id_unit/:id_indicator', EvaluationController.getEvaluationsByIndicator)
+router.get('/api/evaluations/unit/:id_unit/year/:year', EvaluationController.getEvaluationsByUnit)
 
-router.get('/api/evaluations/:id', AuthMiddlewares, EvaluationController.getEvaluationtById)
-router.put('/api/evaluations/:id', AuthMiddlewares, EvaluationController.updateEvaluation)
-router.delete('/evaluations/:id', AuthMiddlewares, EvaluationController.deleteEvaluation)
+router.get('/api/evaluations/:id', EvaluationController.getEvaluationtById)
+router.put('/api/evaluations/:id', EvaluationController.updateEvaluation)
+router.delete('/evaluations/:id', EvaluationController.deleteEvaluation)
 
 //indicators
-router.post('/api/indicators',AuthMiddlewares, IndicatorController.createIndicator )
+router.post('/api/indicators', IndicatorController.createIndicator )
 router.get('/api/indicators', IndicatorController.getIndicators)
-router.get('/api/indicators/search', AuthMiddlewares, IndicatorController.filteredIndicators)
-router.get('/api/indicators-numerics/:id_unit/:year', AuthMiddlewares, IndicatorController.getIndicatorsNumericsByUnit)
-router.get('/api/indicators/:id', AuthMiddlewares, IndicatorController.getIndicatorById)
-router.put('/api/indicators/:id', AuthMiddlewares, IndicatorController.updateIndicator)
-router.delete('/api/indicators/:id', AuthMiddlewares, IndicatorController.deleteIndicator)
+router.get('/api/indicators/search', IndicatorController.filteredIndicators)
+router.get('/api/indicators-numerics/:id_unit/:year', IndicatorController.getIndicatorsNumericsByUnit)
+router.get('/api/indicators/:id', IndicatorController.getIndicatorById)
+router.put('/api/indicators/:id', IndicatorController.updateIndicator)
+router.delete('/api/indicators/:id', IndicatorController.deleteIndicator)
 
 export default router;
