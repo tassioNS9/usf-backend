@@ -4,7 +4,8 @@
   "description": "Sistema de gestão de Unidade de Sáude",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node src/server.ts"
+    "dev": "ts-node src/server.ts",
+    "vercel-build":"npx prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
