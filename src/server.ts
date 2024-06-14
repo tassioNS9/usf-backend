@@ -2,7 +2,7 @@ import "express-async-errors";
 import  Express, { NextFunction, Request, Response } from "express";
 import cors from "cors"
 import router from "./routes";
-
+import UserController from "./controllers/UserController";
 
 const app = Express();
 
@@ -13,7 +13,7 @@ app.use(Express.json())
 app.use(cors())
 app.use(router)
 
-
+router.get('/api/users', UserController.getUsers)
 
 app.use((error: Error, request: Request, response: Response, next:NextFunction)=>{
     return response.json({
