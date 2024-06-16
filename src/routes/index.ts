@@ -16,7 +16,7 @@ router.get('/api/units', UnitController.getUnits)
 router.get('/api/units/search', UnitController.filteredUnits)
 router.get('/api/units/:id', UnitController.getUnitById)
 router.put('/api/units/:id', UnitController.updateUnit)
-router.delete('/units/:id', UnitController.deleteUnit)
+router.delete('/api/units/:id', UnitController.deleteUnit)
 
 
 //users
