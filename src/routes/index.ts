@@ -38,7 +38,7 @@ router.get('/api/evaluations/unit/:id_unit/year/:year', EvaluationController.get
 
 router.get('/api/evaluations/:id', EvaluationController.getEvaluationtById)
 router.put('/api/evaluations/:id', EvaluationController.updateEvaluation)
-router.delete('/evaluations/:id', EvaluationController.deleteEvaluation)
+router.delete('api/evaluations/:id', EvaluationController.deleteEvaluation)
 
 //indicators
 router.post('/api/indicators', IndicatorController.createIndicator )
