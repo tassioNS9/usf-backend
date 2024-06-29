@@ -15,7 +15,7 @@ export default {
       
       let indicatorExists = await prisma.indicator.findFirst({
         where: {
-          description
+          description:description.toLowerCase()
         },
       });
       if (indicatorExists) {
