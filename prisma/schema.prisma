@@ -20,24 +20,24 @@ model Unit {
   state        String
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
-  users_unit   User[]
-  Evaluation   Evaluation[]
+  users        User[]
+  evaluations  Evaluation[]
 
   @@map("units")
 }
 
 model User {
-  id              Int           @id @default(autoincrement())
-  name            String
-  cpf             String        @unique
-  password        String
-  id_unit         Int
-  unit            Unit          @relation(fields: [id_unit], references: [id], onDelete: Cascade)
-  office          String
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  role            Role          @default(USER)
-  refresh_token   RefreshToken?
+  id            Int           @id @default(autoincrement())
+  name          String
+  cpf           String        @unique
+  password      String
+  id_unit       Int?
+  unit          Unit?         @relation(fields: [id_unit], references: [id], onDelete: Cascade)
+  office        String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  role          Role          @default(USER)
+  refresh_token RefreshToken?
 
   @@map("users")
 }

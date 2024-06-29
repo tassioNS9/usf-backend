@@ -11,6 +11,16 @@ export default {
       const {description , objective, dimension , type_Indicator, sources } = request.body;
 
       const createIndicator = new IndicatorRepository();
+
+      
+      let indicatorExists = await prisma.indicator.findFirst({
+        where: {
+          description
+        },
+      });
+      if (indicatorExists) {
+        return response.status(400).json({ message: 'Nome de indicador já registrado!' });
+      }
   
       const indicator = await createIndicator.create( description , objective, dimension , type_Indicator, sources);
 

@@ -19,6 +19,10 @@ export default {
         return response.status(400).json({ message: 'CPF já cadastrado!' });
       }
 
+      if (role === "USER" && id_unit === null) {
+        return response.status(400).json({ message: 'Unidade é obrigatória!' });
+      }
+
       const user = await createUser.create(name, cpf, password, id_unit, office, role);
 
       return response.status(201).json({ user });
@@ -65,43 +69,6 @@ export default {
     }
   },
 
-  async filteredUsers(request: Request, response: Response) {
-    const { name} = request.query;
-    const id_unit  =  parseInt(request.query.id_unit as string);
-    try {
-      const filteredUsers = await prisma.user.findMany({
-        where: {
-          AND: [
-            {
-              name: { contains: name.toString() }
-            },
-            {
-              id_unit:id_unit
-
-            },
-          ]
-
-        }, include: {
-          unit: {
-            select: {
-              name: true
-            }
-          }
-        },
-        orderBy: {
-          name: 'asc', // Ordenar pelo campo 'nome' em ordem ascendente (alfabética)
-        },
-
-      })
-      if (filteredUsers.length === 0) {
-        return response.send({ message: 'Usuário não encontrado!' });
-      }
-
-      return response.json({ data: filteredUsers });
-    } catch (error) {
-      response.status(500).json({ message: error});
-    }
-  },
   async getUserById(request: Request, response: Response) {
     try {
 

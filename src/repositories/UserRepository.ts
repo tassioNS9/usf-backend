@@ -8,7 +8,7 @@ class UserRepository implements IUser {
     name: string,
     cpf: string,
     password: string,
-    id_unit : number,
+    id_unit : number | null,
     office: string,
     role: Role,
 ): Promise<User> {
@@ -19,6 +19,11 @@ class UserRepository implements IUser {
     });
     if (userExists) {
       throw new Error("Erro: usuário ja existe!");
+    }
+
+    if(role === 'USER' && id_unit===null){
+      console.log('error')
+      throw new Error("Erro: Unidade obrigatória!");
     }
 
     const HashPassword = await hash(password, 8)

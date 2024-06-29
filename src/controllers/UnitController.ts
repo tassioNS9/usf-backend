@@ -16,7 +16,7 @@ export default {
         },
       });
       if (unitExists) {
-        return response.status(400).json({ message: 'Unidade com esse nome já cadastrada!' });
+        return response.status(400).json({ message: 'Nome de unidade já cadastrada!' });
       }
   
       const unit = await createUnit.create(
@@ -41,8 +41,11 @@ export default {
       const allUnits = await prisma.unit.findMany({
        // take:10,
         orderBy: {
-          name: 'asc', // Ordenar pelo campo 'nome' em ordem ascendente (alfabética)
+          name: 'desc', // Ordenar pelo campo 'nome' em ordem ascendente (alfabética)
         },
+        include:{
+          users:true
+        }
       });
 
       return response.status(200).json({ data: allUnits });
@@ -51,27 +54,27 @@ export default {
     }
   },
   
-  async filteredUnits(request: Request, response: Response) {
-    const { searchString} = request.query;
+  // async filteredUnits(request: Request, response: Response) {
+  //   const { searchString} = request.query;
 
-    try{
-      const filteredUnits = await prisma.unit.findMany({
-        where: {      
-              name:{contains: searchString.toString()}
-        },
-        orderBy: {
-          name: 'asc', // Ordenar pelo campo 'nome' em ordem ascendente (alfabética)
-        },
-      }) 
-      if(filteredUnits.length === 0){
-        return response.send({message:'Unidade não encontrada!'});
-      }
+  //   try{
+  //     const filteredUnits = await prisma.unit.findMany({
+  //       where: {      
+  //             name:{contains: searchString.toString()}
+  //       },
+  //       orderBy: {
+  //         name: 'asc', // Ordenar pelo campo 'nome' em ordem ascendente (alfabética)
+  //       },
+  //     }) 
+  //     if(filteredUnits.length === 0){
+  //       return response.send({message:'Unidade não encontrada!'});
+  //     }
 
-      return response.json({data: filteredUnits});
-    } catch (error) {
-      return response.status(500).json(error);
-    }
-  },
+  //     return response.json({data: filteredUnits});
+  //   } catch (error) {
+  //     return response.status(500).json(error);
+  //   }
+  // },
   // getUnitById
   async getUnitById(request: Request, response: Response) {
     try {
@@ -81,7 +84,7 @@ export default {
           id: unitId,
         },
         include: {
-          users_unit: true,
+          users: true,
         },
       });
 
