@@ -40,7 +40,6 @@ class UserRepository implements IUser {
         password : HashPassword,
       },
     });
-
     return user;
   }
 

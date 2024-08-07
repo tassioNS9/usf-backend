@@ -8,6 +8,8 @@ export default {
     try {
       const { id_indicator, id_unit, date_evaluation, evaluator, valueNum, valueBol } = request.body;
 
+      console.log(date_evaluation)
+
       const createEvaluation = new EvaluationRepository();
 
       const evaluation = await createEvaluation.create(id_indicator, id_unit, date_evaluation, evaluator, valueNum, valueBol);
