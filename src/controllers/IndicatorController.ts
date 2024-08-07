@@ -8,7 +8,7 @@ export default {
   async createIndicator(request: Request, response: Response) {
 
     try{
-      const {description , objective, dimension , type_Indicator, sources } = request.body;
+      const {description , id_objective , type_Indicator, sources } = request.body;
 
       const createIndicator = new IndicatorRepository();
 
@@ -22,7 +22,7 @@ export default {
         return response.status(400).json({ message: 'Nome de indicador já registrado!' });
       }
   
-      const indicator = await createIndicator.create( description , objective, dimension , type_Indicator, sources);
+      const indicator = await createIndicator.create( description , id_objective , type_Indicator, sources);
 
       return response.status(201).json({ indicator });
     }catch(e){
@@ -88,20 +88,27 @@ export default {
       }
     },
 
-    async getIndicatorsTypeBOL(request: Request, response: Response) {
-      const unitId = parseInt(request.params.id);
+    async getIndicatorsBOLByUnit(request: Request, response: Response) {
+      const id_unit = parseInt(request.params.id_unit);
+      const year = parseInt(request.params.year)
 
 
       try {
         const allIndicatorsTypeBOOL = await prisma.indicator.findMany({
           where:{
-            type_Indicator:TypeIndicators.BOOL
-            
+            type_Indicator:TypeIndicators.BOOL,
           },include:{
             evaluations:{
               where:{
-                id_unit:unitId
-                
+                AND:[
+                  {
+                    id_unit:id_unit,
+                  },
+                  {
+                    date_evaluation:{gte: new Date(`${year}-01-01`), lt: new Date(`${year + 1}-01-01`)},
+                  },
+              
+                ]             
               },
               orderBy:{
                 date_evaluation:'asc'
@@ -163,7 +170,7 @@ export default {
           id: indicatorId,
         },
         data: {
-          description , objective, dimension , type_Indicator, sources 
+          description , type_Indicator, sources 
         },
       });
 

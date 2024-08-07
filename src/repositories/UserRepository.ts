@@ -18,12 +18,14 @@ class UserRepository implements IUser {
       },
     });
     if (userExists) {
-      throw new Error("Erro: usuário ja existe!");
+      throw new Error("Erro: usuário/CPF ja existe!");
     }
 
-    if(role === 'USER' && id_unit===null){
-      console.log('error')
+    if( (role === Role.USER || role === Role.DIRECTOR) && id_unit === null){
       throw new Error("Erro: Unidade obrigatória!");
+    }
+    if( (role === Role.ADMIN || role === Role.MANAGER) && id_unit !== null){
+      throw new Error("Erro ao cadastrar ADM ou Gerente");
     }
 
     const HashPassword = await hash(password, 8)

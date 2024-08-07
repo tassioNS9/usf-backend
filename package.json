@@ -8,6 +8,9 @@
      "postinstall": "prisma generate",
     "vercel-build":"npx prisma migrate deploy"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

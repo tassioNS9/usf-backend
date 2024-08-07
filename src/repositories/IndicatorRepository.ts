@@ -5,8 +5,7 @@ import prisma from "../database";
 class IndicatorRepository implements IIndicator {
   public async create(
     description : string,
-    objective : number,
-    dimension: string,
+    id_objective : number,
     type_Indicator : TypeIndicators,
     sources : string
   ): Promise<Indicator> {
@@ -24,8 +23,7 @@ class IndicatorRepository implements IIndicator {
     const indicator = await prisma.indicator.create({
       data: {
         description,
-        objective,
-        dimension,
+        id_objective,
         type_Indicator,
         sources
       }

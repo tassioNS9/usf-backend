@@ -106,13 +106,6 @@ export default {
           id_unit:unitId,
           id_indicator:indicatortId
         },
-        include:{
-          indicator:{
-            select:{
-              description:true
-            }
-          }
-        },
         orderBy:[
           {date_evaluation:'asc'}
         ]
@@ -181,6 +174,6 @@ export default {
     } catch (e) {
       response.status(500).json({ message: e});
     }
-  }
+  },
 };
 

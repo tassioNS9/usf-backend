@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -54,6 +54,8 @@ model RefreshToken {
 enum Role {
   ADMIN
   USER
+  DIRECTOR
+  MANAGER
 }
 
 enum TypeIndicators {
@@ -61,11 +63,30 @@ enum TypeIndicators {
   NUMERIC
 }
 
+model Guideline {
+  id          Int         @id @default(autoincrement())
+  numeration  Int         @unique
+  description String      @unique
+  objectives  Objective[]
+  @@map("guidelines")
+}
+
+model Objective {
+  id           Int         @id @default(autoincrement())
+  numeration   Int
+  id_guideline Int
+  guideline    Guideline   @relation(fields: [id_guideline], references: [id], onDelete: Cascade)
+  description  String      @unique
+  Indicator    Indicator[]
+
+  @@map("objectives")
+}
+
 model Indicator {
   id             Int            @id @default(autoincrement())
   description    String         @unique
-  objective      Int
-  dimension      String
+  id_objective   Int
+  objective      Objective      @relation(fields: [id_objective], references: [id], onDelete: Cascade)
   type_Indicator TypeIndicators
   sources        String
   evaluations    Evaluation[]
